@@ -57,7 +57,8 @@ namespace ViewModel {
 
 		public Dictionary<ResearchSet, string> ResearchSetItems {
 			get {
-				return new Dictionary<ResearchSet, string>() {
+				return new Dictionary<ResearchSet, string>
+				{
 					{ResearchSet.Theme1, "First theme"},
 					{ResearchSet.Theme2, "Second theme"},
 					{ResearchSet.Theme3, "Third theme"}
@@ -175,7 +176,8 @@ namespace ViewModel {
 			SaveFileDialog dialog = new SaveFileDialog();
 			if (dialog.ShowDialog() != true) return;
 			try {
-				Researcher.Serialize(dialog.FileName, mRes); 
+				Researcher.Serialize(dialog.FileName, mRes);
+			    mUpdated = false;
 			}
 			catch {
 				MessageBox.Show("An error occured while saving researcher to file.");
