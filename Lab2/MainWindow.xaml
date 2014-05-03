@@ -1,0 +1,15 @@
+﻿<Window x:Class="Lab2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525">
+	<TabControl>
+		<TabItem Header="Collection">
+			<Frame Source="CollectionView.xaml">
+			</Frame>
+		</TabItem>
+		<TabItem Header="Add researcher">
+			<Frame Source="ResearcherPage.xaml">
+			</Frame>
+		</TabItem>
+	</TabControl>
+</Window>
