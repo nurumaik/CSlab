@@ -49,9 +49,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Lab\Lab.csproj">
+    <ProjectReference Include="..\Lab\Classes.csproj">
       <Project>{36A4EE82-BDD7-4C4C-A677-80DBECA8570D}</Project>
-      <Name>Lab</Name>
+      <Name>Classes</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

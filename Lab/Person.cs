@@ -1,116 +1,132 @@
 using System;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Text;
+using Lab.Annotations;
 
 
 namespace Lab
 {
 	[Serializable]
-	public class Person : IDeepCopy
+	public class Person : IDeepCopy, INotifyPropertyChanged
 	{
 		protected string mFirstName;
 		protected string mLastName;
-		protected System.DateTime mBirthDate;
+		protected DateTime mBirthDate;
 
-        public string firstName
-        {
-          get
-          {
-            return mFirstName;
-          }
+		public string FirstName
+		{
+			get
+			{
+				return mFirstName;
+			}
 
-          set
-          {
-            mFirstName = value;
-          }
-        }
+			set
+			{
+				mFirstName = value;
+				OnPropertyChanged("FirstName");
+			}
+		}
 
-        public string lastName
-        {
-          get
-          {
-            return mLastName;
-          }
+		public string LastName
+		{
+			get
+			{
+				OnPropertyChanged("LastName");
+				return mLastName;
+			}
 
-          set
-          {
-            mLastName = value;
-          }
-        }
+			set
+			{
+				mLastName = value;
+			}
+		}
 
-        public DateTime birthDate
-        {
-          get
-          {
-            return mBirthDate;
-          }
+		public DateTime BirthDate
+		{
+			get
+			{
+				return mBirthDate;
+			}
 
-          set
-          {
-            mBirthDate = value;
-          }
-        }
+			set
+			{
+				OnPropertyChanged("BirthDate");
+				mBirthDate = value;
+			}
+		}
 
-		    public Person (string fName, string lName, DateTime bDate)
-		    {
-			    mFirstName = fName;
-			    mLastName = lName;
-			    mBirthDate = bDate;
-		    }
+		public Person(string fName, string lName, DateTime bDate)
+		{
+			mFirstName = fName;
+			mLastName = lName;
+			mBirthDate = bDate;
+		}
 
-        public override string ToString()
-        {
-            return new StringBuilder()
-                .Append("First name: ")
-                .AppendLine(mFirstName)
-                .Append("Last name: ")
-                .AppendLine(mLastName)
-                .Append("Birth date: ")
-                .AppendLine(mBirthDate.ToString())
-                .ToString();
-        }
+		public override string ToString()
+		{
+			return new StringBuilder()
+				.Append("First name: ")
+				.AppendLine(mFirstName)
+				.Append("Last name: ")
+				.AppendLine(mLastName)
+				.Append("Birth date: ")
+				.AppendLine(mBirthDate.ToString())
+				.ToString();
+		}
 
-        public virtual string ToShortString()
-        {
-             return new StringBuilder()
-                .Append("First name: ")
-                .AppendLine(mFirstName)
-                .Append("Last name: ")
-                .AppendLine(mLastName)
-                .AppendLine(mBirthDate.ToString())
-                .ToString();
-        }
+		public virtual string ToShortString()
+		{
+			return new StringBuilder()
+				.Append("First name: ")
+				.AppendLine(mFirstName)
+				.Append("Last name: ")
+				.AppendLine(mLastName)
+				.AppendLine(mBirthDate.ToString())
+				.ToString();
+		}
 
-        public override bool Equals(object obj)
-        {
-          if (!(obj is Person))
-            return false;
-          Person p = obj as Person;
-          return (p.firstName == firstName) &&
-                 (p.lastName == lastName) &&
-                 (p.birthDate == birthDate);
-        }
+		public override bool Equals(object obj)
+		{
+			if (!(obj is Person))
+				return false;
+			Person p = obj as Person;
+			return (p.FirstName == FirstName) &&
+						 (p.LastName == LastName) &&
+						 (p.BirthDate == BirthDate);
+		}
 
-        public static bool operator==(Person p, Person obj)
-        {
-          return p.Equals(obj);
-        }
+		public static bool operator ==(Person p, Person obj)
+		{
+			return p.Equals(obj);
+		}
 
-        public static bool operator!=(Person p, Person obj)
-        {
-          return !(p.Equals(obj));
-        }
+		public static bool operator !=(Person p, Person obj)
+		{
+			return p != null && !(p.Equals(obj));
+		}
 
-        public override int GetHashCode()
-        {
-          return ToString().GetHashCode();
-        }
+		public override int GetHashCode()
+		{
+			return ToString().GetHashCode();
+		}
 
-        public object DeepCopy()
-        {
-          return new Person(firstName, lastName, birthDate);
-        }
+		public object DeepCopy()
+		{
+			return new Person(FirstName, LastName, BirthDate);
+		}
 
+		[field: NonSerialized]
+		public event PropertyChangedEventHandler PropertyChanged;
 
+		[NotifyPropertyChangedInvocator]
+		protected virtual void OnPropertyChanged
+			([CallerMemberName] string propertyName = null)
+		{
+			PropertyChangedEventHandler handler = PropertyChanged;
+			if (handler != null) 
+				handler(this, new PropertyChangedEventArgs(propertyName));
+		}
 	}
 }
 

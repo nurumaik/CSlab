@@ -67,60 +67,60 @@ namespace ViewModel {
 		}
 
 		public string Name {
-			get { return mRes.firstName; }
+			get { return mRes.FirstName; }
 			set {
 				mUpdated = true; 
-				mRes.firstName = value; 
+				mRes.FirstName = value; 
 			}
 		}
 
 		public string LastName {
-			get { return mRes.lastName; }
+			get { return mRes.LastName; }
 			set {
 				mUpdated = true; 
-				mRes.lastName = value; 
+				mRes.LastName = value; 
 			}
 		}
 
 		public DateTime BirthDate {
-			get { return mRes.birthDate; }
+			get { return mRes.BirthDate; }
 			set {
 				mUpdated = true;
-				mRes.birthDate = value;
+				mRes.BirthDate = value;
 			}
 		}
 
 		public bool Degree {
-			get { return mRes.isDoc; }
+			get { return mRes.IsDoc; }
 			set {
 				mUpdated = true;
-				mRes.isDoc = value;
+				mRes.IsDoc = value;
 			}
 		}
 
 		public string ParticipantsCount {
 			get {
-				return mCurrentProject.participantsCount.ToString(CultureInfo.InvariantCulture);
+				return mCurrentProject.ParticipantsCount.ToString(CultureInfo.InvariantCulture);
 			}
 
 			set {
 				int tmp;
 				bool result = Int32.TryParse(value, out tmp);
 				if (result)
-					mCurrentProject.participantsCount = tmp;
+					mCurrentProject.ParticipantsCount = tmp;
 			}
 		}
 		// ReSharper disable InconsistentNaming
 		public ResearchSet RS {
-			get { return mCurrentProject.researchSet; }
+			get { return mCurrentProject.ResearchSet; }
 			set {
-				mCurrentProject.researchSet = value; 
+				mCurrentProject.ResearchSet = value; 
 			}
 		}
 
 		public TimeFrame TF {
-			get { return mCurrentProject.timeFrame;  }
-			set { mCurrentProject.timeFrame = value; }
+			get { return mCurrentProject.TimeFrame;  }
+			set { mCurrentProject.TimeFrame = value; }
 		}
 		// ReSharper restore InconsistentNaming
 		public string PublicationName {
@@ -139,11 +139,11 @@ namespace ViewModel {
 		}
 
 		public ObservableCollection<Project> Projects {
-			get { return new ObservableCollection<Project>(mRes.projects); }
+			get { return new ObservableCollection<Project>(mRes.Projects); }
 		}
 
 		public ObservableCollection<Paper> Papers {
-			get { return new ObservableCollection<Paper>(mRes.papers); }
+			get { return new ObservableCollection<Paper>(mRes.Papers); }
 		}
 
 		public Project SelectedProject { get; set; }
@@ -194,25 +194,25 @@ namespace ViewModel {
 
 		public void AddProject() {
 			mUpdated = true; 
-			mRes.addProjects(new Project(RS, Int32.Parse(ParticipantsCount), TF));
+			mRes.AddProjects(new Project(RS, Int32.Parse(ParticipantsCount), TF));
 			OnPropertyChanged("Projects");
 		}
 
 		public void RemoveProject() {
 			mUpdated = true; 
-			mRes.projects.Remove(SelectedProject);
+			mRes.Projects.Remove(SelectedProject);
 			OnPropertyChanged("Projects");
 		}
 
 		public void AddPaper() {
 			mUpdated = true; 
-			mRes.addPapers(new Paper(PublicationName, Int32.Parse(AuthorsCount)));
+			mRes.AddPapers(new Paper(PublicationName, Int32.Parse(AuthorsCount)));
 			OnPropertyChanged("Papers");
 		}
 
 		public void RemovePaper() {
 			mUpdated = true; 
-			mRes.papers.Remove(SelectedPaper);
+			mRes.Papers.Remove(SelectedPaper);
 			OnPropertyChanged("Papers");
 		}
 

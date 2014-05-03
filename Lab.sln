@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab", "Lab\Lab.csproj", "{36A4EE82-BDD7-4C4C-A677-80DBECA8570D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Classes", "Lab\Classes.csproj", "{36A4EE82-BDD7-4C4C-A677-80DBECA8570D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YobaApp", "YobaApp\YobaApp.csproj", "{DA0AC453-33EB-4701-91C3-4982AB329A7F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab", "YobaApp\Lab.csproj", "{DA0AC453-33EB-4701-91C3-4982AB329A7F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModel", "ViemModel\ViewModel.csproj", "{D4E2EAD3-62A2-460F-8B83-6CB71C994AC6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab2", "Lab2\Lab2.csproj", "{FFB0D694-8F8B-4DD0-98A5-B55B4A1A2A25}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +51,16 @@ Global
 		{D4E2EAD3-62A2-460F-8B83-6CB71C994AC6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{D4E2EAD3-62A2-460F-8B83-6CB71C994AC6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{D4E2EAD3-62A2-460F-8B83-6CB71C994AC6}.Release|x86.ActiveCfg = Release|Any CPU
+		{FFB0D694-8F8B-4DD0-98A5-B55B4A1A2A25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFB0D694-8F8B-4DD0-98A5-B55B4A1A2A25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFB0D694-8F8B-4DD0-98A5-B55B4A1A2A25}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{FFB0D694-8F8B-4DD0-98A5-B55B4A1A2A25}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{FFB0D694-8F8B-4DD0-98A5-B55B4A1A2A25}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FFB0D694-8F8B-4DD0-98A5-B55B4A1A2A25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFB0D694-8F8B-4DD0-98A5-B55B4A1A2A25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFB0D694-8F8B-4DD0-98A5-B55B4A1A2A25}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{FFB0D694-8F8B-4DD0-98A5-B55B4A1A2A25}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{FFB0D694-8F8B-4DD0-98A5-B55B4A1A2A25}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -6,63 +6,63 @@ namespace Lab
 	[Serializable]
 	public class Project : IDeepCopy
 	{
-    public ResearchSet researchSet {get; set;}
-    public int participantsCount {get; set;}
-    public TimeFrame timeFrame {get; set;}
+		public ResearchSet ResearchSet { get; set; }
+		public int ParticipantsCount { get; set; }
+		public TimeFrame TimeFrame { get; set; }
 
-		public Project (ResearchSet rs = ResearchSet.Theme1,
-        int pc = 1, TimeFrame tf = TimeFrame.Long)
+		public Project(ResearchSet rs = ResearchSet.Theme1,
+				int pc = 1, TimeFrame tf = TimeFrame.Long)
 		{
-      researchSet = rs;
-      participantsCount = pc;
-      timeFrame = tf;
+			ResearchSet = rs;
+			ParticipantsCount = pc;
+			TimeFrame = tf;
 		}
 
-    public object DeepCopy()
-    {
-      return new Project(researchSet, participantsCount, timeFrame);
-    }
+		public object DeepCopy()
+		{
+			return new Project(ResearchSet, ParticipantsCount, TimeFrame);
+		}
 
-    public override string ToString()
-    {
-        return new StringBuilder()
-            .Append("Research set: ")
-            .AppendLine(researchSet.ToString())
-            .Append("Participants count: ")
-            .AppendLine(participantsCount.ToString())
-            .Append("Time frame: ")
-            .AppendLine(timeFrame.ToString())
-            .ToString();
-        //return new StringBuilder().Append(researchSet).AppendLine()
-        //                          .Append(participantsCount).AppendLine()
-        //                          .Append(timeFrame).AppendLine()
-        //                          .ToString();
-    }
+		public override string ToString()
+		{
+			return new StringBuilder()
+					.Append("Research set: ")
+					.AppendLine(ResearchSet.ToString())
+					.Append("Participants count: ")
+					.AppendLine(ParticipantsCount.ToString())
+					.Append("Time frame: ")
+					.AppendLine(TimeFrame.ToString())
+					.ToString();
+			//return new StringBuilder().Append(researchSet).AppendLine()
+			//                          .Append(participantsCount).AppendLine()
+			//                          .Append(timeFrame).AppendLine()
+			//                          .ToString();
+		}
 
-    public override bool Equals(object o)
-    {
-      if (!(o is Project))
-        return false;
-      Project p = o as Project;
-      return (p.researchSet == researchSet) &&
-             (p.participantsCount == participantsCount) &&
-             (p.timeFrame == timeFrame);
-    }
+		public override bool Equals(object o)
+		{
+			if (!(o is Project))
+				return false;
+			Project p = o as Project;
+			return (p.ResearchSet == ResearchSet) &&
+						 (p.ParticipantsCount == ParticipantsCount) &&
+						 (p.TimeFrame == TimeFrame);
+		}
 
-    public static bool operator==(Project p, Project o)
-    {
-      return p.Equals(o);
-    }
+		public static bool operator ==(Project p, Project o)
+		{
+			return p != null && p.Equals(o);
+		}
 
-    public static bool operator!=(Project p, Project o)
-    {
-      return !(p.Equals(o));
-    }
+		public static bool operator !=(Project p, Project o)
+		{
+			return p != null && !(p.Equals(o));
+		}
 
-    public override int GetHashCode()
-    {
-      return ToString().GetHashCode();
-    }
+		public override int GetHashCode()
+		{
+			return ToString().GetHashCode();
+		}
 	}
 }
 
