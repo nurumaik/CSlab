@@ -4,11 +4,76 @@
 			xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
 			xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
 			mc:Ignorable="d" 
-			d:DesignHeight="300" d:DesignWidth="300"
 	Title="CollectionView">
 
-	<Grid>
-		<ListBox HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100"/>
+    <Grid Margin="0,0,0,0">
+        <Menu>
+            <MenuItem Header="File">
+                <MenuItem Header="New" />
+                <MenuItem Header="Open" />
+                <MenuItem Header="Save" />
+            </MenuItem>
+            <MenuItem Header="Edit">
+                <MenuItem Header="Remove" />
+                <MenuItem Header="Add default researcher" />
+            </MenuItem>
+        </Menu>
+        <ListBox HorizontalAlignment="Left" Width="100" Margin="10,81,0,10"/>
+        <ToolBarTray Margin="0,32,0,0" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Width="290">
+            <ToolBar>
+                <Button Content="New"></Button>
+                <Button Content="Open"></Button>
+                <Button Content="Save"></Button>
+            </ToolBar>
+            <ToolBar>
+                <Button Content="Remove"></Button>
+                <Button Content="Add default researcher"></Button>
+            </ToolBar>
+        </ToolBarTray>
+        <Grid Margin="115,81,10,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <ListBox ItemsSource="{Binding Projects}" Name="ProjectsListBox" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="144" VerticalAlignment="Top" Width="160" Margin="316,74,0,0" SelectedItem="{Binding SelectedProject}">
+            </ListBox>
+            <ListBox ItemsSource="{Binding Papers}" Name="PapersListBox" Grid.ColumnSpan="2" Margin="481,74,10,0" Height="144" VerticalAlignment="Top" SelectedItem="{Binding SelectedPaper}">
+            </ListBox>
+            <Expander Header="Project properties" Grid.ColumnSpan="2" Margin="10,223,0,0" Height="119" VerticalAlignment="Top" HorizontalAlignment="Left" Width="293">
+                <Grid Background="#FFE5E5E5" Height="99">
+                    <ComboBox ItemsSource="{Binding ResearchSetItems}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding Path=RS}" Name="ResearchSetComboBox" HorizontalAlignment="Left" Margin="161,65,0,0" VerticalAlignment="Top" Width="120"/>
+                    <ComboBox ItemsSource="{Binding TimeFrameItems}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding Path=TF}" Name="TimeFrameComboBox" HorizontalAlignment="Left" Margin="161,10,0,0" VerticalAlignment="Top" Width="120"/>
+                    <TextBox Text="{Binding ParticipantsCount}" Name="ParticipantsCountTextBox" HorizontalAlignment="Left" Height="23" Margin="161,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                    <Label Content="Time frame&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="24"/>
+                    <Label Content="Participants count&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Research set&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,61,0,0" VerticalAlignment="Top"/>
+                </Grid>
+            </Expander>
+            <Expander Grid.ColumnSpan="2" Header="Paper properties" HorizontalAlignment="Left" Margin="338,223,0,0" VerticalAlignment="Top" Height="92" Width="302">
+                <Grid Background="#FFE5E5E5">
+                    <TextBox Name="PublicationNameTextBox" HorizontalAlignment="Left" Height="23" Margin="170,10,0,0" TextWrapping="Wrap" Text="{Binding PublicationName}" VerticalAlignment="Top" Width="120"/>
+                    <TextBox Name="AuthorsCountTextBox" HorizontalAlignment="Left" Height="23" Margin="170,38,0,0" TextWrapping="Wrap" Text="{Binding AuthorsCount}" VerticalAlignment="Top" Width="120"/>
+                    <Label Content="Publication name&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Authors count&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top"/>
+                </Grid>
+            </Expander>
+            <GroupBox Grid.ColumnSpan="2" Grid.Column="0" Header="Person Info" HorizontalAlignment="Left" Margin="10,26,0,0" VerticalAlignment="Top" Height="192" Width="301">
+                <Grid Margin="10,0,-2,-12">
+                    <Label Margin="10,14,473,203" Content=""/>
+                    <TextBox Name="NameTextBox" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Name}" VerticalAlignment="Top" Margin="81,12,0,0" Width="190" />
+                    <TextBox Name="LastNameTextBox" HorizontalAlignment="Left" Height="23" Margin="81,48,0,0" TextWrapping="Wrap" Text="{Binding LastName}" VerticalAlignment="Top" Width="190"/>
+                    <DatePicker SelectedDate="{Binding BirthDate}" Name="BirthDateDatePicker" HorizontalAlignment="Left" Margin="81,94,0,0" VerticalAlignment="Top" Width="190"/>
+                    <CheckBox IsChecked="{Binding Degree}" Name="DegreeCheckBox" Content="CheckBox" HorizontalAlignment="Left" Margin="81,145,0,0" VerticalAlignment="Top" Width="190"/>
+                    <Label Content="Name&#xD;&#xA;" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"/>
+                    <Label Content="Last Name&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,46,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Birth Date&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,93,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Degree&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,140,0,0" VerticalAlignment="Top"/>
+                </Grid>
+            </GroupBox>
+            <Label Grid.ColumnSpan="2" Content="Projects&#xD;&#xA;" HorizontalAlignment="Left" Margin="316,43,0,0" VerticalAlignment="Top"/>
+            <Label Grid.ColumnSpan="2" Content="Papers&#xD;&#xA;" HorizontalAlignment="Left" Margin="481,43,0,0" VerticalAlignment="Top"/>
 
-	</Grid>
+        </Grid>
+
+    </Grid>
 </Page>
