@@ -3,77 +3,93 @@
 			xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
 			xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+			xmlns:vm="clr-namespace:Lab2"
 			mc:Ignorable="d" 
 	Title="CollectionView">
 
-    <Grid Margin="0,0,0,0">
-        <Menu>
-            <MenuItem Header="File">
-                <MenuItem Header="New" />
-                <MenuItem Header="Open" />
-                <MenuItem Header="Save" />
-            </MenuItem>
-            <MenuItem Header="Edit">
-                <MenuItem Header="Remove" />
-                <MenuItem Header="Add default researcher" />
-            </MenuItem>
-        </Menu>
-        <ListBox HorizontalAlignment="Left" Width="100" Margin="10,81,0,10"/>
-        <ToolBarTray Margin="0,32,0,0" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Width="290">
-            <ToolBar>
-                <Button Content="New"></Button>
-                <Button Content="Open"></Button>
-                <Button Content="Save"></Button>
-            </ToolBar>
-            <ToolBar>
-                <Button Content="Remove"></Button>
-                <Button Content="Add default researcher"></Button>
-            </ToolBar>
-        </ToolBarTray>
-        <Grid Margin="115,81,10,10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0*"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <ListBox ItemsSource="{Binding Projects}" Name="ProjectsListBox" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="144" VerticalAlignment="Top" Width="160" Margin="316,74,0,0" SelectedItem="{Binding SelectedProject}">
-            </ListBox>
-            <ListBox ItemsSource="{Binding Papers}" Name="PapersListBox" Grid.ColumnSpan="2" Margin="481,74,10,0" Height="144" VerticalAlignment="Top" SelectedItem="{Binding SelectedPaper}">
-            </ListBox>
-            <Expander Header="Project properties" Grid.ColumnSpan="2" Margin="10,223,0,0" Height="119" VerticalAlignment="Top" HorizontalAlignment="Left" Width="293">
-                <Grid Background="#FFE5E5E5" Height="99">
-                    <ComboBox ItemsSource="{Binding ResearchSetItems}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding Path=RS}" Name="ResearchSetComboBox" HorizontalAlignment="Left" Margin="161,65,0,0" VerticalAlignment="Top" Width="120"/>
-                    <ComboBox ItemsSource="{Binding TimeFrameItems}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding Path=TF}" Name="TimeFrameComboBox" HorizontalAlignment="Left" Margin="161,10,0,0" VerticalAlignment="Top" Width="120"/>
-                    <TextBox Text="{Binding ParticipantsCount}" Name="ParticipantsCountTextBox" HorizontalAlignment="Left" Height="23" Margin="161,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                    <Label Content="Time frame&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="24"/>
-                    <Label Content="Participants count&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top"/>
-                    <Label Content="Research set&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,61,0,0" VerticalAlignment="Top"/>
-                </Grid>
-            </Expander>
-            <Expander Grid.ColumnSpan="2" Header="Paper properties" HorizontalAlignment="Left" Margin="338,223,0,0" VerticalAlignment="Top" Height="92" Width="302">
-                <Grid Background="#FFE5E5E5">
-                    <TextBox Name="PublicationNameTextBox" HorizontalAlignment="Left" Height="23" Margin="170,10,0,0" TextWrapping="Wrap" Text="{Binding PublicationName}" VerticalAlignment="Top" Width="120"/>
-                    <TextBox Name="AuthorsCountTextBox" HorizontalAlignment="Left" Height="23" Margin="170,38,0,0" TextWrapping="Wrap" Text="{Binding AuthorsCount}" VerticalAlignment="Top" Width="120"/>
-                    <Label Content="Publication name&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top"/>
-                    <Label Content="Authors count&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top"/>
-                </Grid>
-            </Expander>
-            <GroupBox Grid.ColumnSpan="2" Grid.Column="0" Header="Person Info" HorizontalAlignment="Left" Margin="10,26,0,0" VerticalAlignment="Top" Height="192" Width="301">
-                <Grid Margin="10,0,-2,-12">
-                    <Label Margin="10,14,473,203" Content=""/>
-                    <TextBox Name="NameTextBox" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Name}" VerticalAlignment="Top" Margin="81,12,0,0" Width="190" />
-                    <TextBox Name="LastNameTextBox" HorizontalAlignment="Left" Height="23" Margin="81,48,0,0" TextWrapping="Wrap" Text="{Binding LastName}" VerticalAlignment="Top" Width="190"/>
-                    <DatePicker SelectedDate="{Binding BirthDate}" Name="BirthDateDatePicker" HorizontalAlignment="Left" Margin="81,94,0,0" VerticalAlignment="Top" Width="190"/>
-                    <CheckBox IsChecked="{Binding Degree}" Name="DegreeCheckBox" Content="CheckBox" HorizontalAlignment="Left" Margin="81,145,0,0" VerticalAlignment="Top" Width="190"/>
-                    <Label Content="Name&#xD;&#xA;" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"/>
-                    <Label Content="Last Name&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,46,0,0" VerticalAlignment="Top"/>
-                    <Label Content="Birth Date&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,93,0,0" VerticalAlignment="Top"/>
-                    <Label Content="Degree&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,140,0,0" VerticalAlignment="Top"/>
-                </Grid>
-            </GroupBox>
-            <Label Grid.ColumnSpan="2" Content="Projects&#xD;&#xA;" HorizontalAlignment="Left" Margin="316,43,0,0" VerticalAlignment="Top"/>
-            <Label Grid.ColumnSpan="2" Content="Papers&#xD;&#xA;" HorizontalAlignment="Left" Margin="481,43,0,0" VerticalAlignment="Top"/>
+	<Page.DataContext>
+		<vm:CollectionViewModel />
+	</Page.DataContext>
+	
+	<Page.Resources>
+		<RoutedCommand x:Key="KeyRemoveCommand" />
+		<RoutedCommand x:Key="KeyAddDefaultResearcherCommand" />
+	</Page.Resources>
 
-        </Grid>
+	<Page.CommandBindings>
+		<!-- TODO: BIND SOME ROUTED SHIT -->
+	</Page.CommandBindings>
 
-    </Grid>
+	<Grid Margin="0,0,0,0" Background="AliceBlue">
+		<Menu Margin="0,0,10,418">
+			<MenuItem Header="File">
+				<MenuItem Header="New" Command="ApplicationCommands.New"/>
+				<MenuItem Header="Open" Command="ApplicationCommands.Open"/>
+				<MenuItem Header="Save" Command="ApplicationCommands.Save"/>
+			</MenuItem>
+			<MenuItem Header="Edit">
+				<MenuItem Header="Remove" Command="{StaticResource KeyRemoveCommand}"/>
+				<MenuItem Header="Add default researcher" Command="{StaticResource KeyAddDefaultResearcherCommand}"/>
+			</MenuItem>
+		</Menu>
+		<ListBox ItemsSource="{Binding Researchers}" SelectedItem="{Binding CurrentResearcher}" Name="ResearchersListBox" HorizontalAlignment="Left" Width="100" Margin="10,125,0,10"/>
+		<ToolBarTray Margin="0,32,0,0" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Width="290">
+			<ToolBar>
+				<Button Content="New" Command="ApplicationCommands.New"/>
+				<Button Content="Open" Command="ApplicationCommands.Open"/>
+				<Button Content="Save" Command="ApplicationCommands.Save"/>
+			</ToolBar>
+			<ToolBar>
+				<Button Content="Remove" Command="{StaticResource KeyRemoveCommand}"/>
+				<Button Content="Add default researcher" Command="{StaticResource KeyAddDefaultResearcherCommand}"/>
+			</ToolBar>
+		</ToolBarTray>
+		<GroupBox Header="Researcher data" Margin="115,81,10,10" Visibility="{Binding ResearcherDataVisible}">
+			<Grid>
+				<ListBox ItemsSource="{Binding Projects}" Name="ProjectsListBox" HorizontalAlignment="Left" Height="144" VerticalAlignment="Top" Width="160" Margin="316,74,0,0" SelectedItem="{Binding SelectedProject}"/>
+				<ListBox ItemsSource="{Binding Papers}" Name="PapersListBox" Grid.ColumnSpan="2" Margin="481,74,10,0" Height="144" VerticalAlignment="Top">
+				</ListBox>
+				<Expander Header="Project properties" Margin="10,223,0,0" Height="119" VerticalAlignment="Top" HorizontalAlignment="Left" Width="293">
+					<Grid Background="#FFE5E5E5" Height="99">
+						<TextBlock Text="{Binding RS}" Name="ResearchSetTextBlock" HorizontalAlignment="Left" Margin="161,65,0,0" VerticalAlignment="Top" Width="120"/>
+						<TextBlock Text="{Binding TF}" Name="TimeFrameTextBlock" HorizontalAlignment="Left" Margin="161,10,0,0" VerticalAlignment="Top" Width="120" Height="22"/>
+						<TextBlock Text="{Binding ParticipantsCount}" Name="ParticipantsCountTextBlock" HorizontalAlignment="Left" Height="23" Margin="161,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+						<Label Content="Time frame&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="24"/>
+						<Label Content="Participants count&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top"/>
+						<Label Content="Research set&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,61,0,0" VerticalAlignment="Top"/>
+					</Grid>
+				</Expander>
+				<Expander Grid.ColumnSpan="2" Header="Paper properties" HorizontalAlignment="Left" Margin="338,223,0,0" VerticalAlignment="Top" Height="92" Width="302">
+					<Grid Background="#FFE5E5E5">
+						<TextBox Name="PublicationNameTextBox" HorizontalAlignment="Left" Height="23" Margin="170,10,0,0" TextWrapping="Wrap" Text="{Binding PublicationName}" VerticalAlignment="Top" Width="120"/>
+						<TextBox Name="AuthorsCountTextBox" HorizontalAlignment="Left" Height="23" Margin="170,38,0,0" TextWrapping="Wrap" Text="{Binding AuthorsCount}" VerticalAlignment="Top" Width="120"/>
+						<Label Content="Publication name&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top"/>
+						<Label Content="Authors count&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top"/>
+					</Grid>
+				</Expander>
+				<GroupBox Grid.Column="0" Header="Person Info" HorizontalAlignment="Left" Margin="10,26,0,0" VerticalAlignment="Top" Height="192" Width="301">
+					<Grid Margin="10,0,-2,-12">
+						<Label Margin="10,14,473,203" Content=""/>
+						<TextBox Text="{Binding FirstName}" Name="NameTextBox" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="81,12,0,0" Width="190" />
+						<TextBox Text="{Binding LastName}" Name="LastNameTextBox" HorizontalAlignment="Left" Margin="81,53,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190"/>
+						<TextBox Text="{Binding BirthDate}" Name="BirthDateDatePicker" HorizontalAlignment="Left" Margin="81,94,0,0" VerticalAlignment="Top" Width="190"/>
+						<CheckBox IsChecked="{Binding Degree}" Name="DegreeCheckBox" Content="CheckBox" HorizontalAlignment="Left" Margin="81,145,0,0" VerticalAlignment="Top" Width="190"/>
+						<Label Content="Name&#xD;&#xA;" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"/>
+						<Label Content="Last Name&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,46,0,0" VerticalAlignment="Top"/>
+						<Label Content="Birth Date&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,93,0,0" VerticalAlignment="Top"/>
+						<Label Content="Degree&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,140,0,0" VerticalAlignment="Top"/>
+					</Grid>
+				</GroupBox>
+				<Label Content="Projects&#xD;&#xA;" HorizontalAlignment="Left" Margin="316,43,0,0" VerticalAlignment="Top" Height="42" Width="52"/>
+				<Label Content="Papers&#xD;&#xA;" HorizontalAlignment="Left" Margin="481,43,0,0" VerticalAlignment="Top" Height="42" Width="45"/>
+				<Label Content="Average project participants" HorizontalAlignment="Left" Margin="316,17,0,0" VerticalAlignment="Top" Height="26" Width="159"/>
+				<TextBlock Text="{Binding AverageTeamSize}" TextWrapping="Wrap" Margin="498,22,10,304"/>
+
+			</Grid>
+		</GroupBox>
+		<RadioButton IsChecked="{Binding ResearcherDataTemplate,Converter={StaticResource KeyEnumConverter},ConverterParameter={x:Static vm:CollectionViewModel+ResearcherDataTemplateEnum.Default}}" Content="Default view" HorizontalAlignment="Left" Margin="10,65,0,0" VerticalAlignment="Top" GroupName="TemplateGroup"/>
+		<RadioButton IsChecked="{Binding ResearcherDataTemplate,Converter={StaticResource KeyEnumConverter},ConverterParameter={x:Static vm:CollectionViewModel+ResearcherDataTemplateEnum.Short}}" Content="Short view" HorizontalAlignment="Left" Margin="10,85,0,0" VerticalAlignment="Top" GroupName="TemplateGroup"/>
+		<RadioButton IsChecked="{Binding ResearcherDataTemplate,Converter={StaticResource KeyEnumConverter},ConverterParameter={x:Static vm:CollectionViewModel+ResearcherDataTemplateEnum.Custom}}" Content="Custom view" HorizontalAlignment="Left" Margin="10,105,0,0" VerticalAlignment="Top" GroupName="TemplateGroup" />
+
+	</Grid>
 </Page>

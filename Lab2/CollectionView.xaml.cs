@@ -20,9 +20,12 @@ namespace Lab2
 	/// </summary>
 	public partial class CollectionView : Page
 	{
+// ReSharper disable once InconsistentNaming
+		public CollectionViewModel VM;
 		public CollectionView()
 		{
 			InitializeComponent();
+			VM = new CollectionViewModel();
 		}
 	}
 }

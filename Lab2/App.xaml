@@ -1,7 +1,27 @@
 ﻿<Application x:Class="Lab2.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             StartupUri="MainWindow.xaml">
-    <Application.Resources>
-    </Application.Resources>
+						 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+						 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+						 xmlns:z="clr-namespace:Lab;assembly=Lab"
+						 xmlns:l="clr-namespace:Lab2"
+						 StartupUri="MainWindow.xaml">
+	<Application.Resources>
+		<z:ResearcherObservableCollection x:Key="KeyResearcherObservableCollection" />
+		<l:ResearcherConverter x:Key="KeyResearcherConverter" />
+		<l:DoubleConverter x:Key="KeyDoubleConverter" />
+		<l:EnumToBooleanConverter x:Key="KeyEnumConverter" />
+		<Style TargetType="{x:Type TextBox}">
+			<Style.Triggers>
+				<Trigger Property="Control.IsKeyboardFocused" Value="True">
+					<Setter Property="Control.FontFamily" Value="Comic sans MS" />
+					<Setter Property="Control.FontSize" Value="20" />
+				</Trigger>
+			</Style.Triggers>
+		</Style>
+		<DataTemplate x:Key="KeyMinimalDataTemplate">
+			<TextBlock Text="{Binding ShortInfo}" />
+		</DataTemplate>
+		<DataTemplate x:Key="KeyMaxResDataTemplate">
+			<TextBlock Text="{Binding Path=Researcher, Converter={StaticResource KeyResearcherConverter}}" />
+		</DataTemplate>
+	</Application.Resources>
 </Application>

@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 namespace Lab
 {
 	[Serializable]
-	sealed class ResearcherObservableCollection :
+	public sealed class ResearcherObservableCollection :
 		System.Collections.ObjectModel.ObservableCollection<Researcher>
 	{
-		ResearcherObservableCollection()
+		public ResearcherObservableCollection()
 		{
 			Subscribe();
 		}
@@ -24,7 +24,7 @@ namespace Lab
 			CollectionChanged += (sender, args) => Updated = true;
 		}
 
-		static void Serialize(ResearcherObservableCollection col, string fileName)
+		public static void Serialize(ResearcherObservableCollection col, string fileName)
 		{
 			FileStream stream = new FileStream(fileName, 
 				                                 FileMode.Create, 
