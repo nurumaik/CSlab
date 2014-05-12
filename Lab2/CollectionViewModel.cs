@@ -31,8 +31,7 @@ namespace Lab2 {
 
 		public ObservableCollection<Project> Projects
 		{
-			get
-			{
+			get {
 				return new ObservableCollection<Project>(mCurrentResearcher.Projects);
 			}
 		}
@@ -89,14 +88,17 @@ namespace Lab2 {
 
 		public string AverageTeamSize {
 			get {
+				if (mCurrentResearcher.Projects.Count == 0)
 				return mCurrentResearcher.Projects.
 					Average(p => p.ParticipantsCount).ToString();
 			}
 		}
 
-		public void NewCommandHandler
-			(object source, ExecutedRoutedEventArgs args) {
-
+		public void NewCommandHandler() {
+			mData = new ResearcherObservableCollection();
+			AddDefaultResearcher();
+			mUpdated = false;
+			OnPropertyChanged();
 		}
 		public void OpenCommandHandler
 			(object source, ExecutedRoutedEventArgs args) {
@@ -105,6 +107,14 @@ namespace Lab2 {
 		public void SaveCommandHandler
 			(object source, ExecutedRoutedEventArgs args) {
 
+		}
+
+		public void AddDefaultResearcher() {
+			Researcher res = new Researcher();
+			mData.AddResearcher(res);
+			mCurrentResearcher = res;
+			mCurrentPaper = new Paper();
+			mCurrentProject = new Project();
 		}
 
 		public bool SaveCommandCanExecuted() {
@@ -121,13 +131,18 @@ namespace Lab2 {
 		public Researcher CurrentResearcher
 		{
 			get { return mCurrentResearcher; }
-			set { mCurrentResearcher = value; }
+			set { if (value != null) mCurrentResearcher = value; }
 		}
 
 		public Paper SelectedPaper
 		{
 			get { return mCurrentPaper; }
-			set { mCurrentPaper = value; }
+			set { if (value != null) mCurrentPaper = value; }
+		}
+
+		public Project SelectedProject {
+			get { return mCurrentProject; }
+			set { if (value != null) mCurrentProject = value; }
 		}
 
 		public ResearcherObservableCollection Researchers
@@ -159,11 +174,7 @@ namespace Lab2 {
 			};
 
 		public CollectionViewModel() {
-			mData = new ResearcherObservableCollection();
-			mCurrentResearcher = null;
-			mCurrentProject = null;
-			mCurrentPaper = null;
-			mUpdated = false;
+			NewCommandHandler();
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;

@@ -86,25 +86,25 @@ namespace Lab
 				.ToString();
 		}
 
-		public override bool Equals(object obj)
-		{
-			if (!(obj is Person))
-				return false;
-			Person p = obj as Person;
-			return (p.FirstName == FirstName) &&
-						 (p.LastName == LastName) &&
-						 (p.BirthDate == BirthDate);
-		}
+		//public override bool Equals(object obj)
+		//{
+		//	if (!(obj is Person))
+		//		return false;
+		//	Person p = obj as Person;
+		//	return (p.FirstName == FirstName) &&
+		//				 (p.LastName == LastName) &&
+		//				 (p.BirthDate == BirthDate);
+		//}
 
-		public static bool operator ==(Person p, Person obj)
-		{
-			return p.Equals(obj);
-		}
+		//public static bool operator ==(Person p, Person obj)
+		//{
+		//	return p != null && p.Equals(obj);
+		//}
 
-		public static bool operator !=(Person p, Person obj)
-		{
-			return p != null && !(p.Equals(obj));
-		}
+		//public static bool operator !=(Person p, Person obj)
+		//{
+		//	return p as object != null && !(p.Equals(obj));
+		//}
 
 		public override int GetHashCode()
 		{

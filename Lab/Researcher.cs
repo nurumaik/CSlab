@@ -13,11 +13,9 @@ namespace Lab
 		Person, 
 		IDeepCopy, 
 		IEnumerable<Project>, 
-		IEnumerable, 
 		IComparable<Researcher>, 
 		IComparer<Researcher>, 
-		IDataErrorInfo,
-		INotifyPropertyChanged
+		IDataErrorInfo
 	{
 		private List<Paper> mPapers;
 		private List<Project> mProjects;

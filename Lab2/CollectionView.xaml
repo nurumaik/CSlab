@@ -18,6 +18,11 @@
 
 	<Page.CommandBindings>
 		<!-- TODO: BIND SOME ROUTED SHIT -->
+        <CommandBinding Command="ApplicationCommands.New" Executed="NewCommandHandler" />
+        <CommandBinding Command="ApplicationCommands.Open" Executed="OpenCommandHandler"></CommandBinding>
+        <CommandBinding Command="ApplicationCommands.Save" Executed="SaveCommandHandler" CanExecute="SaveCommandCanExecute"></CommandBinding>
+        <CommandBinding Command="{StaticResource KeyRemoveCommand}" Executed="RemoveCommandHandler"></CommandBinding>
+        <CommandBinding Command="{StaticResource KeyAddDefaultResearcherCommand}" Executed="AddResearcherCommandHandler"></CommandBinding>
 	</Page.CommandBindings>
 
 	<Grid Margin="0,0,0,0" Background="AliceBlue">

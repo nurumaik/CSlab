@@ -27,5 +27,28 @@ namespace Lab2
 			InitializeComponent();
 			VM = new CollectionViewModel();
 		}
+
+		private void NewCommandHandler(object sender, ExecutedRoutedEventArgs e) {
+			VM.NewCommandHandler();
+		}
+
+		private void OpenCommandHandler(object sender, ExecutedRoutedEventArgs e) {
+			throw new NotImplementedException();
+		}
+
+		private void SaveCommandHandler(object sender, ExecutedRoutedEventArgs e) {
+			throw new NotImplementedException();
+		}
+
+		private void RemoveCommandHandler(object sender, ExecutedRoutedEventArgs e) {
+			throw new NotImplementedException();
+		}
+
+		private void SaveCommandCanExecute(object sender, CanExecuteRoutedEventArgs e) {
+		}
+
+		private void AddResearcherCommandHandler(object sender, ExecutedRoutedEventArgs e) {
+			throw new NotImplementedException();
+		}
 	}
 }
