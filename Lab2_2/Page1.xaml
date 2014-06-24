@@ -81,11 +81,11 @@
         <StackPanel Orientation="Vertical">
           <TextBox Text="{Binding FirstName}" />
           <TextBox Text="{Binding LastName}" /> 
-          <TextBox Text="{Binding BirthDate, 
-            ValidatesOnDataErrors=False}" />
+          <TextBox Text="{Binding CurrentResearcher.BirthDate, 
+            ValidatesOnDataErrors=True}" />
           <CheckBox IsChecked="{Binding IsDoc}" /> 
-          <ListBox ItemsSource="{Binding Projects, 
-                                 ValidatesOnDataErrors=False}" 
+          <ListBox ItemsSource="{Binding CurrentResearcher.Projects, 
+                                 ValidatesOnDataErrors=True}" 
                    SelectedItem="{Binding CurrentProject}" />
           <ListBox ItemsSource="{Binding Papers}" />
           <TextBlock Text="{Binding AverageTeam, 

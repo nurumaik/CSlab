@@ -28,11 +28,25 @@ namespace Lab2_2 {
 
 		public Page2() {
 			CurrentResearcher = new Researcher();
-			CurrentProject = new Project();
+			/*CurrentProject = new Project();
+			CurrentPaper = new Paper();*/
 			InitializeComponent();
 		}
 
-		public Researcher CurrentResearcher { get; set; }
+		public Researcher CurrentResearcher {
+			get { return _currentResearcher; }
+			set {
+				if (Equals(value, _currentResearcher)) return;
+				_currentResearcher = value;
+				OnPropertyChanged();
+				OnPropertyChanged("FirstName");
+				OnPropertyChanged("LastName");
+				OnPropertyChanged("BirthDate");
+				OnPropertyChanged("IsDoc");
+				//OnPropertyChanged("Projects");
+				//OnPropertyChanged("Papers");
+			}
+		}
 
 		static public Dictionary<TimeFrame, string> TimeFrameItems {
 			get {
@@ -77,24 +91,44 @@ namespace Lab2_2 {
 			set { CurrentResearcher.IsDoc = value; }
 		}
 
-		public ObservableCollection<Project> Projects {
-			get {
-				return CurrentResearcher.Projects;
-			}
-		}
-
 		public Project CurrentProject {
 			get { return _currentProject; }
 			set {
-				_currentProject = value;
-				RS = value.ResearchSet;
-				TF = value.TimeFrame;
-				_pc = value.ParticipantsCount;
+				if ((object)value == null)
+					_currentProject = new Project();
+				else
+					_currentProject = value;
+				RS = _currentProject.ResearchSet;
+				TF = _currentProject.TimeFrame;
+				_pc = _currentProject.ParticipantsCount;
 				OnPropertyChanged("RS");
 				OnPropertyChanged("TF");
 				OnPropertyChanged("ParticipantsCount");
 			}
 		}
+
+		public Paper CurrentPaper {
+			get { return _currentPaper; }
+			set {
+				
+				if (Equals(value, _currentPaper)) 
+					return;
+				if ((object)value == null)
+					_currentPaper = new Paper();
+				else
+					AuthorsCount = value.authors.ToString();
+				PublicationName = value.name;
+				OnPropertyChanged("AuthorsCount");
+				OnPropertyChanged("PublicationName");
+				OnPropertyChanged();
+			}
+		}
+
+		public string AuthorsCount {
+			get { return _ac.ToString(); }
+			set { _ac = Convert.ToInt32(value); }
+		}
+		public string PublicationName { get; set; }
 
 		public ResearchSet RS { get; set; }
 
@@ -105,14 +139,18 @@ namespace Lab2_2 {
 			set { _pc = Convert.ToInt32(value); }
 		}
 
-		private int _pc;
+		private int _pc = 0;
+		private int _ac = 0;
+		private Paper _currentPaper;
+		private Researcher _currentResearcher;
 
-	#endregion
+		#endregion
 		#region Handlers
 		private void AddResearcherHandler
 			(object sender, ExecutedRoutedEventArgs e) {
 			((ResearcherObservableCollection)Application.Current.Resources
 				["KeyResearcherCollection"]).AddResearcher(CurrentResearcher);
+			CurrentResearcher = new Researcher();
 			((TabControl) Application.Current.MainWindow.FindName("MainTabControl"))
 				.SelectedIndex = 0;
 		}
@@ -143,11 +181,42 @@ namespace Lab2_2 {
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) {
+		protected virtual void OnPropertyChanged(
+			[CallerMemberName] string propertyName = null) 
+		{
 			PropertyChangedEventHandler handler = PropertyChanged;
-			if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+			if (handler != null) 
+				handler(this, new PropertyChangedEventArgs(propertyName));
 		}
 
 
+		private void AddPaper(object sender, RoutedEventArgs e) {
+			CurrentResearcher.Papers.Add(
+				new Paper(PublicationName, _ac));
+		}
+
+		private void DeleteItem(object sender, ExecutedRoutedEventArgs e) {
+			if (e.Parameter.ToString() == "Project") {
+				Project p = CurrentProject;
+				CurrentProject = null;
+				CurrentResearcher.Projects.Remove(p);
+			}
+			else if (e.Parameter.ToString() == "Paper") {
+				Paper p = CurrentPaper;
+				CurrentPaper = null;
+				CurrentResearcher.Papers.Remove(p);
+			}
+			else
+				MessageBox.Show(e.Parameter.ToString());
+		}
+
+		private void CanDeleteItem(object sender, CanExecuteRoutedEventArgs e) {
+			if (e.Parameter == null)
+				e.CanExecute = false;
+			else if (e.Parameter.ToString() == "Project")
+				e.CanExecute = CurrentResearcher.Projects.Contains(CurrentProject);
+			else if (e.Parameter.ToString() == "Paper")
+				e.CanExecute = CurrentResearcher.Papers.Contains(CurrentPaper);
+		}
 	}
 }

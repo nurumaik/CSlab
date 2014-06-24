@@ -188,6 +188,7 @@ namespace Lab2_2 {
 				OnPropertyChanged("LastName");
 				OnPropertyChanged("BirthDate");
 				OnPropertyChanged("Projects");
+				OnPropertyChanged("CurrentProject");
 				OnPropertyChanged("Papers");
 			}
 		}
@@ -196,6 +197,8 @@ namespace Lab2_2 {
 			get { return _currentProject; }
 			set {
 				if (Equals(value, _currentProject)) return;
+				if ((object) value == null)
+					_currentProject = new Project();
 				_currentProject = value;
 				OnPropertyChanged();
 				OnPropertyChanged("RS");

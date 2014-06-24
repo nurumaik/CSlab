@@ -14,6 +14,9 @@
     <CommandBinding Command="{StaticResource AddResearcherCommand}" 
                     Executed="AddResearcherHandler"
                     CanExecute="AddResearcherCanExecute"/>
+    <CommandBinding Command="ApplicationCommands.Delete"
+                    Executed="DeleteItem"
+                    CanExecute="CanDeleteItem"/>
   </Page.CommandBindings>
   <StackPanel Orientation="Vertical">
     <GroupBox Name="DetailedInfo" MinWidth="100">
@@ -23,24 +26,17 @@
         <DatePicker SelectedDate="{Binding CurrentResearcher.BirthDate, 
           ValidatesOnDataErrors=True}" />
         <CheckBox IsChecked="{Binding IsDoc}" />
+        <Label>CYKA</Label>
         <ListBox ItemsSource="{Binding CurrentResearcher.Projects}" 
                  SelectedItem="{Binding CurrentProject}">
           <ListBox.ContextMenu>
             <ContextMenu>
-              <MenuItem Header="Add" Click="AddProject"/>
-              <MenuItem Header="Remove" Command="ApplicationCommands.Delete"/>
+              <MenuItem Header="Add" Click="AddProject" />
+              <MenuItem Header="Remove" Command="ApplicationCommands.Delete"
+                        CommandParameter="Project"/>
             </ContextMenu>
           </ListBox.ContextMenu>
         </ListBox>
-        <!--<ListBox ItemsSource="{Binding Papers}" 
-                 SelectedItem="{Binding CurrentPaper}">
-          <ListBox.ContextMenu>
-            <ContextMenu>
-              <MenuItem Header="Add" />
-              <MenuItem Header="Remove" />
-            </ContextMenu>
-          </ListBox.ContextMenu>
-        </ListBox> -->
         <ComboBox ItemsSource="{Binding ResearchSetItems}"
                   DisplayMemberPath="Value"
                   SelectedValuePath="Key"
@@ -50,8 +46,18 @@
                   SelectedValuePath="Key"
                   SelectedValue="{Binding TF}" />
         <TextBox Text="{Binding ParticipantsCount}" />
-        <!--<TextBox Text="{Binding AuthorsCount}" />
-        <TextBox Text="{Binding PublicationName}" />-->
+        <ListBox ItemsSource="{Binding CurrentResearcher.Papers}" 
+                 SelectedItem="{Binding CurrentPaper}">
+          <ListBox.ContextMenu>
+            <ContextMenu>
+              <MenuItem Header="Add" Click="AddPaper" />
+              <MenuItem Header="Remove" Command="ApplicationCommands.Delete"
+                        CommandParameter="Paper"/>
+            </ContextMenu>
+          </ListBox.ContextMenu>
+        </ListBox>
+        <TextBox Text="{Binding AuthorsCount}" />
+        <TextBox Text="{Binding PublicationName}" />
       </StackPanel>
     </GroupBox>
     <StackPanel Orientation="Horizontal">
