@@ -79,7 +79,7 @@ namespace Lab2_2 {
 
 		public ObservableCollection<Project> Projects {
 			get {
-				return new ObservableCollection<Project>(CurrentResearcher.Projects);
+				return CurrentResearcher.Projects;
 			}
 		}
 

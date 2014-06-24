@@ -1,6 +1,8 @@
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Collections;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
@@ -17,8 +19,8 @@ namespace Lab
 		IComparer<Researcher>, 
 		IDataErrorInfo
 	{
-		private List<Paper> mPapers;
-		private List<Project> mProjects;
+		private ObservableCollection<Paper> mPapers;
+		private ObservableCollection<Project> mProjects;
 		private bool mIsDoc;
 
 		public static void Serialize(string fileName, Researcher res)
@@ -78,7 +80,7 @@ namespace Lab
 			}
 		}
 
-		public List<Paper> Papers //TODO: notifypropertychanged?
+		public ObservableCollection<Paper> Papers //TODO: notifypropertychanged?
 		{
 			get
 			{
@@ -91,7 +93,7 @@ namespace Lab
 			}
 		}
 
-		public List<Project> Projects //TODO: notifypropertychanged?
+		public ObservableCollection<Project> Projects //TODO: notifypropertychanged?
 		{
 			get
 			{
@@ -110,8 +112,8 @@ namespace Lab
 											 bool d = false)
 			: base(firstName, lastName, birthDate)
 		{
-			mPapers = new List<Paper>();
-			mProjects = new List<Project>();
+			mPapers = new ObservableCollection<Paper>();
+			mProjects = new ObservableCollection<Project>();
 			IsDoc = d;
 		}
 
@@ -124,7 +126,8 @@ namespace Lab
 		{
 			if (newPapers.Length == 0)
 				return this;
-			mPapers.AddRange(newPapers);
+			foreach(var p in newPapers)
+				mPapers.Add(p);
 			//OnPropertyChanged("Papers");
 			return this;
 		}
@@ -137,7 +140,8 @@ namespace Lab
 		{
 			if (newProjects.Length == 0)
 				return this;
-			mProjects.AddRange(newProjects);
+			foreach(var p in newProjects)
+				mProjects.Add(p);
 			//OnPropertyChanged("Projects");
 			return this;
 		}
