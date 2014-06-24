@@ -18,11 +18,11 @@
   <StackPanel Orientation="Vertical">
     <GroupBox Name="DetailedInfo" MinWidth="100">
       <StackPanel Orientation="Vertical" Name="ResearcherData">
-        <TextBox Text="{Binding FirstName}" />
-        <TextBox Text="{Binding LastName}" />
+        <TextBox Text="{Binding CurrentResearcher.FirstName}" />
+        <TextBox Text="{Binding CurrentResearcher.LastName}" />
         <DatePicker SelectedDate="{Binding CurrentResearcher.BirthDate, 
           ValidatesOnDataErrors=True}" />
-        <CheckBox IsChecked="{Binding IsDoc}" />
+        <CheckBox IsChecked="{Binding CurrentResearcher.IsDoc}" />
         <ListBox ItemsSource="{Binding CurrentResearcher.Projects}" 
                  SelectedItem="{Binding CurrentProject}">
           <ListBox.ContextMenu>
