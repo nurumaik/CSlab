@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -11,6 +12,7 @@ using System.Windows;
 using System.Windows.Input;
 using Lab;
 using Lab.Annotations;
+using Microsoft.Win32;
 
 
 namespace Lab2 {
@@ -22,12 +24,8 @@ namespace Lab2 {
 			Custom
 		}
 
-		public ResearcherDataTemplateEnum ResearcherDataTemplate { get; set; }
-
-		//public ICommand RemoveCommand;
-		//public ICommand AddDefaultResearcherCommand;
-
-		//public ICommand SetResearcher;
+		private ResearcherDataTemplateEnum mTemplate = ResearcherDataTemplateEnum.Default;
+		//public ResearcherDataTemplateEnum ResearcherDataTemplate { get { return mTemplate; } set { mTemplate = value; if  } }
 
 		public ObservableCollection<Project> Projects
 		{
@@ -60,62 +58,77 @@ namespace Lab2 {
 		}
 
 		public string FirstName {
-			get { return mCurrentResearcher.FirstName; }
-			set { mCurrentResearcher.FirstName = value; }
+			get { return ProtectedResearcher.FirstName; }
+			set { CurrentResearcher.FirstName = value; }
 		}
 
 		public string LastName {
-			get { return mCurrentResearcher.FirstName; }
-			set { mCurrentResearcher.FirstName = value; }
+			get { return ProtectedResearcher.LastName; }
+			set { CurrentResearcher.LastName = value; }
 		}
 
 		public string BirthDate {
-			get { return mCurrentResearcher.BirthDate.ToShortDateString(); }
+			get { return ProtectedResearcher.BirthDate.ToShortDateString(); }         
 			set {
 				DateTime result;
 				bool success = DateTime.TryParse(value, out result);
 				if (success) {
-					mCurrentResearcher.BirthDate = result;
+					CurrentResearcher.BirthDate = result;
 				}
 
 			}
 		}
 
 		public bool Degree {
-			get { return mCurrentResearcher.IsDoc; }
-			set { mCurrentResearcher.IsDoc = value; }
+			get { return ProtectedResearcher.IsDoc; }
+			set { CurrentResearcher.IsDoc = value; }
 		}
 
 		public string AverageTeamSize {
 			get {
-				if (mCurrentResearcher.Projects.Count == 0)
-				return mCurrentResearcher.Projects.
-					Average(p => p.ParticipantsCount).ToString();
+				return mCurrentResearcher.Projects.Count == 0
+					? mCurrentResearcher.Projects
+					  .Average(p => p.ParticipantsCount).ToString()
+					: String.Empty;
 			}
 		}
 
 		public void NewCommandHandler() {
-			mData = new ResearcherObservableCollection();
 			AddDefaultResearcher();
 			mUpdated = false;
 			OnPropertyChanged();
 		}
 		public void OpenCommandHandler
 			(object source, ExecutedRoutedEventArgs args) {
-
+			var fd = new OpenFileDialog();
+			if (fd.ShowDialog() == true) {
+				Researchers = ResearcherObservableCollection.Deserialize(fd.FileName);
+			}
+			mUpdated = false;
+			OnPropertyChanged();
 		}
+
 		public void SaveCommandHandler
 			(object source, ExecutedRoutedEventArgs args) {
-
+			var fd = new SaveFileDialog();
+			if (fd.ShowDialog() == true) {
+				ResearcherObservableCollection.Serialize(Researchers, fd.FileName);
+			}
+			mUpdated = false;
 		}
 
 		public void AddDefaultResearcher() {
 			Researcher res = new Researcher();
-			mData.AddResearcher(res);
-			mCurrentResearcher = res;
-			mCurrentPaper = new Paper();
-			mCurrentProject = new Project();
-		}
+			res.AddProjects(new Project());
+			res.AddProjects(new Project());
+			res.AddProjects(new Project());
+			Researchers.AddResearcher(res);
+			res = new Researcher("OLOLOLO", "FUCK");
+			CurrentResearcher = res;
+			res.AddProjects(new Project());
+			Researchers.AddResearcher(res);
+			SelectedProject = res.Projects.First();
+		} 
 
 		public bool SaveCommandCanExecuted() {
 			return false; //NAHUI IDI SUKA
@@ -131,41 +144,65 @@ namespace Lab2 {
 		public Researcher CurrentResearcher
 		{
 			get { return mCurrentResearcher; }
-			set { if (value != null) mCurrentResearcher = value; }
+			set {
+				mCurrentResearcher = value;
+			}
 		}
 
 		public Paper SelectedPaper
 		{
 			get { return mCurrentPaper; }
-			set { if (value != null) mCurrentPaper = value; }
+			set { mCurrentPaper = value; }
 		}
 
 		public Project SelectedProject {
 			get { return mCurrentProject; }
-			set { if (value != null) mCurrentProject = value; }
+			set { mCurrentProject = value; }
 		}
 
 		public ResearcherObservableCollection Researchers
 		{
-			get { return mData; }
+			get {
+				return (ResearcherObservableCollection) Application.Current.Resources
+					["KeyResearcherObservableCollection"];
+			}
+			set {
+				Application.Current.Resources["KeyResearcherObservableCollection"] = 
+					value;
+			}
 		}
 
-		private ResearcherObservableCollection mData;
-		private Researcher mCurrentResearcher;
+		public bool ResearcherSelected {
+			get { return CurrentResearcher != null; }
+		}
+
+		public bool PaperSelected {
+			get { return mCurrentPaper != null; }
+		}
+
+		private Researcher mCurrentResearcher = null;
 		private Project mCurrentProject;
-		private Paper mCurrentPaper;
+		private Paper mCurrentPaper = null;
+		//private static readonly Paper DummyPaper = new Paper();
+		private static readonly Researcher DummyResearcher = new Researcher();
+
+		private Researcher ProtectedResearcher{
+			get { return CurrentResearcher ?? DummyResearcher; }
+		}
+
+		//private static Project mDummyProject = new Project(); 
 		private bool mUpdated;
 
 
 		static private readonly Dictionary<ResearchSet, string> ResearchSetNames =
-			new Dictionary<ResearchSet, string>
+			new Dictionary <ResearchSet, string>
 			{
 				{ResearchSet.Theme1, "First theme"},
 				{ResearchSet.Theme2, "Second theme"},
 				{ResearchSet.Theme3, "Third theme"}
 			};
 
-		private static readonly Dictionary<TimeFrame, string> TimeFrameNames =
+		static private readonly Dictionary<TimeFrame, string> TimeFrameNames =
 			new Dictionary<TimeFrame, string>
 			{
 				{TimeFrame.Long, "Long"},

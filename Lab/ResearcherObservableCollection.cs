@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
@@ -60,6 +61,11 @@ namespace Lab
 		private void OnItemPropertyChanged(object sender, PropertyChangedEventArgs args)
 		{
 			Updated = true;
+		}
+
+		public void RemoveResearcher(Researcher res) {
+			res.PropertyChanged -= OnItemPropertyChanged;
+			Remove(res);
 		}
 
 		public void RemoveResearcherAt(int index)

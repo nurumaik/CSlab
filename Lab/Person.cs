@@ -106,10 +106,10 @@ namespace Lab
 		//	return p as object != null && !(p.Equals(obj));
 		//}
 
-		public override int GetHashCode()
+		/*public override int GetHashCode()
 		{
 			return ToString().GetHashCode();
-		}
+		}*/
 
 		public object DeepCopy()
 		{

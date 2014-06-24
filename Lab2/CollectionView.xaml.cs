@@ -25,7 +25,7 @@ namespace Lab2
 		public CollectionView()
 		{
 			InitializeComponent();
-			VM = new CollectionViewModel();
+			VM = (CollectionViewModel) DataContext;
 		}
 
 		private void NewCommandHandler(object sender, ExecutedRoutedEventArgs e) {
@@ -45,6 +45,7 @@ namespace Lab2
 		}
 
 		private void SaveCommandCanExecute(object sender, CanExecuteRoutedEventArgs e) {
+			e.CanExecute = true;
 		}
 
 		private void AddResearcherCommandHandler(object sender, ExecutedRoutedEventArgs e) {

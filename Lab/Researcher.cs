@@ -125,8 +125,12 @@ namespace Lab
 			if (newPapers.Length == 0)
 				return this;
 			mPapers.AddRange(newPapers);
-			OnPropertyChanged("Papers");
+			//OnPropertyChanged("Papers");
 			return this;
+		}
+
+		public string ShortInfo {
+			get { return ToShortString(); }
 		}
 
 		public Researcher AddProjects(params Project[] newProjects)
@@ -134,7 +138,7 @@ namespace Lab
 			if (newProjects.Length == 0)
 				return this;
 			mProjects.AddRange(newProjects);
-			OnPropertyChanged("Projects");
+			//OnPropertyChanged("Projects");
 			return this;
 		}
 
@@ -215,11 +219,11 @@ namespace Lab
 				string errormessage = String.Empty;
 				switch (columnName)
 				{
-					case "birthDate":
+					case "BirthDate":
 						if (BirthDate.Year < 1930 || BirthDate.Year > 1990)
 							errormessage = "Bad birth date. Year must be between 1930 and 1990";
 						break;
-					case "projects":
+					case "Projects":
 						if (Projects.Count == 0)
 							errormessage = "No projects";
 						break;

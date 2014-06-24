@@ -1,0 +1,102 @@
+﻿<Page x:Class="Lab2_2.Page1"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:lab22="clr-namespace:Lab2_2"
+      mc:Ignorable="d" 
+      d:DesignHeight="800" d:DesignWidth="1000"
+	  Title="Page1"
+      DataContext="{Binding RelativeSource={RelativeSource Self}}">
+
+  <Page.CommandBindings>
+    <CommandBinding Command="ApplicationCommands.New" 
+                    Executed="NewCommandHandler"/>
+    <CommandBinding Command="ApplicationCommands.Open" 
+                    Executed="OpenCommandHandler"/>
+    <CommandBinding Command="ApplicationCommands.Save" 
+                    Executed="SaveCommandHandler"
+                    CanExecute="SaveCommandCanExecute"/>
+    <CommandBinding Command="ApplicationCommands.Delete"
+                    Executed="DeleteCommandHandler"
+                    CanExecute="DeleteCommandCanExecute"/>
+  </Page.CommandBindings>
+
+  <StackPanel Orientation="Vertical">
+    <Menu>
+      <MenuItem Header="File">
+        <MenuItem Header="New" Command="ApplicationCommands.New"/>
+        <MenuItem Header="Open" Command="ApplicationCommands.Open"/>
+        <MenuItem Header="Save" Command="ApplicationCommands.Save"/>
+      </MenuItem>
+      <MenuItem Header="Edit">
+        <MenuItem Header="Remove" 
+                  Command="ApplicationCommands.Delete"/>
+        <MenuItem Header="Add default researcher" 
+                  Click="AddDefaultResearcher"/>
+      </MenuItem>
+    </Menu>
+    <ToolBarTray>
+      <ToolBar>
+        <Button Content="New" Command="ApplicationCommands.New"/>
+        <Button Content="Open" Command="ApplicationCommands.Open"/>
+        <Button Content="Save" Command="ApplicationCommands.Save"/>
+      </ToolBar>
+      <ToolBar>
+        <Button Content="Remove" 
+                Command="ApplicationCommands.Delete"/>
+        <Button Content="Add default researcher"
+                Click="AddDefaultResearcher"/>
+      </ToolBar>
+    </ToolBarTray>
+    <StackPanel Orientation="Horizontal">
+
+      <StackPanel Orientation="Vertical">
+        <RadioButton 
+          IsChecked="{Binding ResearcherDataTemplate,
+            Converter={StaticResource KeyEnumConverter},
+            ConverterParameter={x:Static 
+              lab22:Page1+ResearcherDataTemplateEnum.Default}}" 
+          Content="Default view" GroupName="TemplateGroup"/>
+        <RadioButton 
+          IsChecked="{Binding ResearcherDataTemplate,
+            Converter={StaticResource KeyEnumConverter},
+            ConverterParameter={x:Static 
+              lab22:Page1+ResearcherDataTemplateEnum.Short}}" 
+          Content="Short view" GroupName="TemplateGroup"/>
+        <RadioButton 
+          IsChecked="{Binding ResearcherDataTemplate,
+            Converter={StaticResource KeyEnumConverter},
+            ConverterParameter={x:Static 
+              lab22:Page1+ResearcherDataTemplateEnum.Custom}}" 
+          Content="Custom view" GroupName="TemplateGroup"/>
+        <ListBox Name="ResearcherCollectionListBox"
+                 ItemTemplate="{Binding RCollTemplate}"
+                 ItemsSource="{Binding RColl}"
+                 SelectedItem="{Binding CurrentResearcher}">
+        </ListBox>
+      </StackPanel>
+
+      <GroupBox Name="DetailedInfo" MinWidth="100">
+        <StackPanel Orientation="Vertical">
+          <TextBox Text="{Binding FirstName}" />
+          <TextBox Text="{Binding LastName}" /> 
+          <TextBox Text="{Binding BirthDate, 
+            ValidatesOnDataErrors=False}" />
+          <CheckBox IsChecked="{Binding IsDoc}" /> 
+          <ListBox ItemsSource="{Binding Projects, 
+                                 ValidatesOnDataErrors=False}" 
+                   SelectedItem="{Binding CurrentProject}" />
+          <ListBox ItemsSource="{Binding Papers}" />
+          <TextBlock Text="{Binding AverageTeam, 
+                            Converter={StaticResource KeyDoubleConverter}}" />
+          <TextBlock Text="{Binding RS}" />
+          <TextBlock Text="{Binding ParticipantsCount}" />
+          <TextBlock Text="{Binding TF}" />
+        </StackPanel>
+      </GroupBox>
+
+    </StackPanel>
+
+  </StackPanel>
+</Page>
