@@ -32,12 +32,13 @@ namespace Lab
 		{
 			get
 			{
-				OnPropertyChanged("LastName");
+				
 				return mLastName;
 			}
 
 			set
 			{
+				OnPropertyChanged("LastName");
 				mLastName = value;
 			}
 		}

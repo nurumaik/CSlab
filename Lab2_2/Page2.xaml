@@ -23,7 +23,7 @@
         <DatePicker SelectedDate="{Binding CurrentResearcher.BirthDate, 
           ValidatesOnDataErrors=True}" />
         <CheckBox IsChecked="{Binding IsDoc}" />
-        <ListBox ItemsSource="{Binding Projects}" 
+        <ListBox ItemsSource="{Binding CurrentResearcher.Projects}" 
                  SelectedItem="{Binding CurrentProject}">
           <ListBox.ContextMenu>
             <ContextMenu>
